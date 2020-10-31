@@ -66,9 +66,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      | Prev | Play | Next |      |      |                    |      |      |  Up  |      |      |      |
+ * |      | Prev | Play | Next |      |      |                    |      |      |  Up  |      |  +   |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      | Vol- | Vol+ |      |      |-------.    ,-------|      | Left | Down |Right |      |      |
+ * |      |      | Vol- | Vol+ |      |      |-------.    ,-------|      | Left | Down |Right |  -   |      |
  * |------+------+------+------+------+------|   (   |    |   )   |------+------+------+------+------+------|
  * |      |      |      |      |      |      |-------|    |-------|      |      |      |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
@@ -80,8 +80,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT( \
 
   KC_GRV , _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______, \
-  _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,                     _______, _______,  KC_UP , _______, _______, _______, \
-  _______, _______, KC_VOLD, KC_VOLU, _______, _______,                     _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, \
+  _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, _______,                     _______, _______,  KC_UP , _______, KC_EQL , _______, \
+  _______, _______, KC_VOLD, KC_VOLU, _______, _______,                     _______, KC_LEFT, KC_DOWN, KC_RGHT, KC_MINS, _______, \
   _______, _______, _______, _______, _______, _______,  KC_LPRN, KC_RPRN,  _______, _______, _______, _______, _______, _______, \
                              _______, _______, _______,  _______, _______,  _______, _______, _______ \
 ),
@@ -136,6 +136,7 @@ const char *read_layer_state(void);
 // const char *read_mode_icon(bool swap);
 // const char *read_host_led_state(void);
 // void set_timelog(void);
+
 // const char *read_timelog(void);
 
 // static void render_logo(void) {
@@ -153,9 +154,10 @@ void oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
     // oled_write_ln(read_layer_state(), false);
-    oled_scroll_left();  // Turns on scrolling
 
-    oled_write_ln("/ //  / /// / //// /\n/ /// /// // // ////\n // / ///  //// / ///", false);
+    oled_scroll_left();  // Turns on scrolling
+    oled_write_ln("- --  - --- - ---- -\n- --- --- -- -- ----\n -- - ---  ---- - ---", false);
+
     // oled_write_ln(read_keylog(), false);
     // oled_write_ln(read_keylogs(), false);
     //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
@@ -164,9 +166,10 @@ void oled_task_user(void) {
   } else {
     // oled_write(read_logo(), false);
     // render_logo();  // Renders a static log
-    oled_scroll_right();  // Turns on scrolling
 
-    oled_write_ln("/ / //// // //  / //\n/ /// /// /// // ///\n/// / /// // / ///  /", false);
+    oled_scroll_right();  // Turns on scrolling
+    oled_write_ln("- - ---- -- --  - --\n- --- --- --- -- ---\n--- - --- -- - ---  -", false);
+
     // oled_write_ln(read_timelog(), false);
     // oled_write_ln(read_layer_state(), false);
   }
